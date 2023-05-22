@@ -14,7 +14,7 @@ class MessageBoardController extends Controller
         $content = $request->input("content");
         $data = [
             'user_id' => $user_id,
-            'content' => $content,
+            'content' => htmlspecialchars($content),
             'created_at' => Carbon::now(),
         ];
         MessageBoard::create($data);
@@ -32,7 +32,7 @@ class MessageBoardController extends Controller
     {
         $update = MessageBoard::findOrFail($request->input("id"));
 
-        $update->content = $request->input('content');
+        $update->content = htmlspecialchars($request->input('content'));
         $update->save();
     
         return redirect()->route('index');
